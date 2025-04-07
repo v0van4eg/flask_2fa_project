@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Настройка 2FA</title>
+</head>
+<body>
+    <h2>Настройка 2FA</h2>
+    {% if qr_code %}
+        <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code"><br>
+        <p>Секретный ключ: {{ secret }}</p>
+    {% else %}
+        <p>QR-код и секретный ключ не были сгенерированы.</p>
+    {% endif %}
+    <form method="post">
+        <button type="submit">Сгенерировать QR-код и секретный ключ</button>
+    </form>
+</body>
+</html>
