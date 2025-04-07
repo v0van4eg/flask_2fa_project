@@ -15,6 +15,11 @@ users_db = {
         "password": "pass123",
         "totp_secret": None,  # Здесь будет ключ для 2FA
         "2fa_enabled": False  # Флаг включения 2FA
+    },
+    "user2": {
+        "password": "pass123",
+        "totp_secret": None,
+        "2fa_enabled": False
     }
 }
 
@@ -23,7 +28,7 @@ def home():
     # Жёсткая проверка: если нет 2FA или не вошли - на логин
     if not session.get('2fa_verified'):
         return redirect(url_for('login'))
-    return "Добро пожаловать! 2FA и вход успешно пройдены."
+    return render_template('hello.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -68,7 +73,7 @@ def setup_2fa():
         # Создаём QR-код
         totp_uri = pyotp.totp.TOTP(secret).provisioning_uri(
             name=username,
-            issuer_name="Secure Flask App"
+            issuer_name="Моё приложение"
         )
 
         # Добавляем отладочные сообщения
